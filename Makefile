@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 10:47:14 by smaccary          #+#    #+#              #
-#    Updated: 2021/05/16 03:27:59 by user42           ###   ########.fr        #
+#    Updated: 2021/05/16 05:33:13 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ ifeq ($(OS),Windows_NT)
 endif
 
 SRC = $(addprefix $(DIRSRC)/, \
-			main.c events.c graphic_utils.c math.c\
+			main.c events.c graphic_utils.c math.c raytrace.c\
 )
 
 OBJDIR = obj

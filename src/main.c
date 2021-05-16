@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 00:26:34 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 04:38:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/16 06:15:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,12 +179,17 @@ void
 	refresh(game);
 }
 
+
 t_vect3
-	ray_color(t_ray *r)
+	ray_color_sphere(t_ray *r, double z)
 {
 	t_vect3	unit_dir;
 	double	t;
 
+	if (hit_sphere((t_vect3){2, 5 + z, z}, 0.5, r))
+		return ((t_vect3){1, 0, 0});
+	if (hit_sphere((t_vect3){-2, 0, z}, 0.5, r))
+		return ((t_vect3){0, 0, 1});
 	unit_dir = vect3_unit(r->dir);
 	t = 0.5 * (unit_dir.y + 1.0);
 	return (
@@ -208,12 +213,13 @@ void
 	t_vect3	col;
 	double	u;
 	double	v;
+	static double	z = -20;
+	static double	dir = 0.5;
 
 	lower_left_corner = (t_vect3){-2.0, -1.0, -1.0};
 	horizontal = (t_vect3){4.0, 0.0, 0.0};
 	vertical = (t_vect3){0.0, 2.0, 0.0};
 	origin = (t_vect3){0.0, 0.0, 0.0};
-	//printf("P3\n%d %d\n%d\n", W_WIDTH, W_HEIGHT, 255);
 	for (size_t y = 0; y < W_HEIGHT; y++)
 	{
 		for (size_t x = 0; x < W_WIDTH; x++)
@@ -233,15 +239,18 @@ void
 					)
 				)
 			};
-			col = ray_color(&ray);
+			col = ray_color_sphere(&ray, z);
 			color = rgb(255.99 * col.x, 255.99 * col.y, 255.99 * col.z);
 			(void)color;
-		//	printf("%u %u %u\n", (unsigned char)(255.99 * col.x), (unsigned char)(255.99 * col.y),
-		//	 (unsigned char)(255.99 * col.z));
 			my_mlx_pixel_put(&(game->img), x,  y, color);
 		}
 	}
-	refresh(game);
+	z += dir;
+	if (z == -1|| z == -20)
+	{
+		dir *= -1;
+		z += dir;
+	}
 }
 
 int main(void)
@@ -250,7 +259,7 @@ int main(void)
 
 	if (init_game(game, W_WIDTH, W_HEIGHT))
 		return (1);
-	do_shitty_raytrace_display(game);
+	//do_shitty_raytrace_display(game);
 	hooks(game);
 	mlx_loop(game->mlx);
 	return (destroy_game(game));

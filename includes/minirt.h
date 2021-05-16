@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 00:27:38 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 04:17:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/16 05:44:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_ray
 	t_vect3		dir;
 }				t_ray;
 
-
 t_vect3 vect3_minus(t_vect3 vect);
 double	vect3_squared_lenght(t_vect3 vect3);
 double	vect3_lenght(t_vect3 vect3);
@@ -74,6 +73,9 @@ t_vect3	vect3_div_scalar(t_vect3 v, double s);
 double	vect3_dot(t_vect3 r, t_vect3 l);
 t_vect3	vect3_cross(t_vect3 r, t_vect3 l);
 t_vect3	vect3_unit(t_vect3 v);
+
+t_vect3	ray_color(t_ray *r);
+char	hit_sphere(t_vect3 center, double radius, t_ray *ray);
 
 typedef struct	s_camera
 {
@@ -91,6 +93,7 @@ typedef struct	s_game
 	int			redraw;
 }				t_game;
 
+void	do_shitty_raytrace_display(t_game *game);
 void	refresh(t_game *game);
 int		init_img(t_img *img_struct, void *mlx, int w, int h);
 int		init_game(t_game *game, int w, int h);

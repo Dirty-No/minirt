@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 01:08:18 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 01:44:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/16 05:46:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		keyboard_handler(t_game *game)
 					| right_handler(game) | left_handler(game)
 					| alt_handler(game) | turn_left_handler(game)
 					| turn_right_handler(game));*/
-    redraw = 0;
+	redraw = 0;
 	if (key_chr(game->keys, CTRL_KEY, K_BUFF_SIZE))
 	{
 		if (key_chr(game->keys, C_KEY, K_BUFF_SIZE))
@@ -89,13 +89,20 @@ int		keyboard_handler(t_game *game)
 	return (redraw);
 }
 
+void
+	draw_scene(t_game *game)
+{
+	do_shitty_raytrace_display(game);
+}
+
 int		loop_handler(t_game *game)
 {
-	game->redraw |= keyboard_handler(game);
+	//game->redraw |= keyboard_handler(game);
+	game->redraw = 1;
 	if (game->redraw)
 	{
-		//draw_scene(game);
-        refresh(game);
+		draw_scene(game);
+		refresh(game);
 	}
 	return (0);
 }
